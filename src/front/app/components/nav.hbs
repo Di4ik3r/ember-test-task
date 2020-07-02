@@ -1,0 +1,20 @@
+<div class="nav">
+	<LinkTo @route="index"><h2>Home</h2></LinkTo>
+	<ol class="categories">
+	{{#each this.categories as |category|}}
+		<li>
+			<LinkTo @route="{{category.category.alias}}">{{category.category.name}}</LinkTo>
+			
+		</li>
+
+			<ul class="children">
+				{{#each category.children as |children|}}
+					<li>
+						<LinkTo @route="{{category.category.alias}}.{{children.alias}}">{{children.name}}</LinkTo>
+					</li>
+				{{/each}}		
+			</ul>
+	{{/each}}
+	</ol>
+	{{!-- {{yield}} --}}
+</div>

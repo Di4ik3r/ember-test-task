@@ -1,0 +1,23 @@
+.bread-crumbs {
+	text-align: center;
+	border: 1px solid blue;
+	width: 25%;
+	margin: auto;
+	padding: 10px 0px;
+	background: rgba(0, 0, 255, 0.089);
+	border-radius: 15px;
+}
+
+.bread-crumbs > .link-to {
+	border: 1px solid green;
+	padding: 5px 20px;
+	background: rgba(0, 255, 0, 0.191);
+	text-decoration: none;
+	transition: 0.2s ease-in-out all;
+	border-radius: 25px;
+	color: black;
+}
+
+.bread-crumbs > .link-to:hover {
+	background: rgba(0, 255, 0, 0.465);
+}

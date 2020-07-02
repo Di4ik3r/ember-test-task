@@ -1,0 +1,11 @@
+<div class="news">
+	{{!-- <LinkTo @route="index"><h2>Home</h2></LinkTo> --}}
+	<ol>
+	{{#each this.posts as |post|}}
+		<LinkTo @route="{{this.category}}.{{post.post.categoryChild}}.post" @model={{post.post}} @post={{post.post}}>
+		{{!-- {{post.post}} --}}
+			<Post @post={{post.post}}/>
+		</LinkTo>
+	{{/each}}
+	</ol>
+</div>

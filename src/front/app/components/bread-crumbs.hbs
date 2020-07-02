@@ -1,0 +1,9 @@
+{{!-- BreadCrumbs: {{this.activeRoute}} --}}
+
+{{!-- {{#each this.activeURL as |route|}}{{/each}} --}}
+
+<div class="bread-crumbs">
+	{{#each this.activeRoute as |route|}}
+		<LinkTo class="link-to" @route={{route.route}}>{{route.alias}}</LinkTo>
+	{{/each}}
+</div>

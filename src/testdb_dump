@@ -1,0 +1,344 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.8 (Ubuntu 11.8-1.pgdg19.10+1)
+-- Dumped by pg_dump version 11.8 (Ubuntu 11.8-1.pgdg19.10+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: categories; Type: TABLE; Schema: public; Owner: user1
+--
+
+CREATE TABLE public.categories (
+    id integer NOT NULL,
+    name character varying(40) NOT NULL,
+    alias character varying(40) NOT NULL,
+    type integer NOT NULL
+);
+
+
+ALTER TABLE public.categories OWNER TO user1;
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
+--
+
+CREATE SEQUENCE public.categories_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.categories_id_seq OWNER TO user1;
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
+--
+
+ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
+
+
+--
+-- Name: category_children; Type: TABLE; Schema: public; Owner: user1
+--
+
+CREATE TABLE public.category_children (
+    id integer NOT NULL,
+    category_id integer NOT NULL,
+    name character varying(40) NOT NULL,
+    alias character varying(40) NOT NULL,
+    ord integer
+);
+
+
+ALTER TABLE public.category_children OWNER TO user1;
+
+--
+-- Name: category_children_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
+--
+
+CREATE SEQUENCE public.category_children_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.category_children_id_seq OWNER TO user1;
+
+--
+-- Name: category_children_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
+--
+
+ALTER SEQUENCE public.category_children_id_seq OWNED BY public.category_children.id;
+
+
+--
+-- Name: category_childrens; Type: TABLE; Schema: public; Owner: user1
+--
+
+CREATE TABLE public.category_childrens (
+    id integer NOT NULL,
+    category_id integer NOT NULL,
+    name character varying(40) NOT NULL,
+    alias character varying(40) NOT NULL,
+    ord integer
+);
+
+
+ALTER TABLE public.category_childrens OWNER TO user1;
+
+--
+-- Name: category_childrens_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
+--
+
+CREATE SEQUENCE public.category_childrens_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.category_childrens_id_seq OWNER TO user1;
+
+--
+-- Name: category_childrens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
+--
+
+ALTER SEQUENCE public.category_childrens_id_seq OWNED BY public.category_childrens.id;
+
+
+--
+-- Name: posts; Type: TABLE; Schema: public; Owner: user1
+--
+
+CREATE TABLE public.posts (
+    id integer NOT NULL,
+    category integer NOT NULL,
+    category_child integer NOT NULL,
+    title character varying(100) NOT NULL,
+    body text NOT NULL,
+    date date NOT NULL
+);
+
+
+ALTER TABLE public.posts OWNER TO user1;
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
+--
+
+CREATE SEQUENCE public.posts_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.posts_id_seq OWNER TO user1;
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
+--
+
+ALTER SEQUENCE public.posts_id_seq OWNED BY public.posts.id;
+
+
+--
+-- Name: categories id; Type: DEFAULT; Schema: public; Owner: user1
+--
+
+ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.categories_id_seq'::regclass);
+
+
+--
+-- Name: category_children id; Type: DEFAULT; Schema: public; Owner: user1
+--
+
+ALTER TABLE ONLY public.category_children ALTER COLUMN id SET DEFAULT nextval('public.category_children_id_seq'::regclass);
+
+
+--
+-- Name: category_childrens id; Type: DEFAULT; Schema: public; Owner: user1
+--
+
+ALTER TABLE ONLY public.category_childrens ALTER COLUMN id SET DEFAULT nextval('public.category_childrens_id_seq'::regclass);
+
+
+--
+-- Name: posts id; Type: DEFAULT; Schema: public; Owner: user1
+--
+
+ALTER TABLE ONLY public.posts ALTER COLUMN id SET DEFAULT nextval('public.posts_id_seq'::regclass);
+
+
+--
+-- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: user1
+--
+
+COPY public.categories (id, name, alias, type) FROM stdin;
+141	News	news	0
+142	Blogs	blogs	1
+143	Forum	forums	2
+\.
+
+
+--
+-- Data for Name: category_children; Type: TABLE DATA; Schema: public; Owner: user1
+--
+
+COPY public.category_children (id, category_id, name, alias, ord) FROM stdin;
+321	141	Business	business	0
+322	141	Culture	culture	1
+323	141	Design	design	2
+324	142	Social	social	0
+325	142	Startups	startups	1
+326	143	Ideas	ideas	0
+327	143	Technologies	technologies	1
+328	143	Startups	startups	2
+\.
+
+
+--
+-- Data for Name: category_childrens; Type: TABLE DATA; Schema: public; Owner: user1
+--
+
+COPY public.category_childrens (id, category_id, name, alias, ord) FROM stdin;
+\.
+
+
+--
+-- Data for Name: posts; Type: TABLE DATA; Schema: public; Owner: user1
+--
+
+COPY public.posts (id, category, category_child, title, body, date) FROM stdin;
+31	141	321	So 2016 Was Not the Year Messaging Changed Your Life	THIS WAS SUPPOSED to be the year that texting wasn’t just texting anymore. After big announcements from Facebook, Google, and others, Americans were going to use messaging apps for so much more than chatting with friends. You were going to seamlessly interact with a world of online businesses. You were going to send questions to search engines and book tables at restaurants. You were going to get stuff done without ever opening another app.	2007-11-30
+32	141	321	How a 70-Year-Old Idea Could Make Engines Way More Efficient	IF YOU POP THE hood on your car and yank out the plastic cover beneath it, you’ll see a beautiful bit of mind-boggling engineering: the internal combustion engine. Today’s engines harness around 100 explosions of fuel and oxygen each second, generating massive power with minimal emissions.\nThat’s great, but tightening pollution standards around the world mean automobiles must become increasingly efficient. Electric cars offer one way forward, but they remain expensive and hobbled by range anxiety—the fear, often unfounded, that you’ll end up stranded with a dead battery. Internal combustion isn’t going anywhere anytime soon, with advancements like turbochargers, direct injection, and variable valve timing squeezing more miles from every gallon.	1995-02-04
+33	141	321	The Neuroscientist Who’s Building a Better Memory for Humans	IN AN EPIDSODE of the dystopian near-future series, Black Mirror, a small, implantable device behind the ear grants the ability to remember, access, and replay every moment of your life in perfect detail, like a movie right before your eyes.\nTheodore Berger, a biomedical engineer at the University of Southern California, can’t promise that level of perfect recall—perhaps for the better—but he is working on a memory prosthesis. The device, surgically implanted directly into the brain, mimics the function of a structure called the hippocampus by electrically stimulating the brain in a particular way to form memories—at least in rats and monkeys. And now, he’s testing one that could work in humans.	2012-12-23
+34	141	323	You Could Play This Jigsaw Puzzle Forever and Never Finish	THE JOY OF any good jigsaw puzzle isn’t finishing it, it’s the satisfaction of linking pieces, one fit at a time. With the Infinite Galaxy Puzzle, which you can assemble in any direction and in countless shapes, that sensation need never end. Granted, that lack of resolution may make you crazy. But it makes the Infinite Galaxy Puzzle from Nervous System a unique contribution to the cannon.\nYou’d expect nothing less from its creators, who have spent “five or six” years making jigsaw puzzles. Founders Jesse Louis-Rosenberg and Jessica Rosenkrantz use custom software to create their designs and a laser cutter to bring them to life. “It harkens back to when puzzles were hand-cut and had a lot more individual style,” Louis-Rosenberg says.	1997-04-14
+35	143	326	JustEat is now delivering takeout with self-driving robots in the UK	The robots will serve you now: Greenwich, London residents have officially begun receiving deliveries from autonomous, six-wheeled rolling cooler bots, which are handling the “last mile” of food delivery from nearby takeout restaurants. Engadget notes that the robots are now in “active service,” after they completed a previous testing phase which began earlier this year.\nBefore you ask, these bots are designed to be tamper-proof, so passers-by won’t just smell your delicious delivery curry and crack one open to score an unpaid meal. Also, in case you wanted to request one for selfie opportunities, you’re out of luck – they’re assigned at random, and not available via specific request while ordering from Just Eat even if you happen to live in their Greenwich operating area.	2000-10-31
+29	142	325	AngelList acquires Product Hunt	AngelList, the LinkedIn for startups, just bought Product Hunt, the platform where people vote up or down on startup products.\nProduct Hunt declined to comment on the selling price but a source close to the matter tells us it was about $20 million. Recode first reported that same price.\nProduct Hunt was rumored to be raising its next round for the past several months but, as founder Ryan Hoover tells TechCrunch, AngelList seemed like the best option for the future of the company and now the two are combining forces.	2016-05-24
+30	142	325	Siren Care makes a “smart” sock to track diabetic health	Diabetic health tracking startup Siren Care has created smart socks that use temperature sensors to detect inflammation — and therefore injury — in realtime for diabetics.\nCo-founder Ran Ma was working on growing biomass to grow back skin that had been damaged while at Northwestern University when she started learning how to treat diabetic feet and thought of making a wearable that could track and prevent injuries.\nBoth type 1 and type 2 diabetes patients are prone to foot swelling, among other foot issues and it can lead to some serious problems such as infection or amputation of the foot if not checked. Early detection is crucial to head off any serious complications and Ma and her co-founder Veronica Tran believe built-in sensors are the key.	2017-05-17
+\.
+
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user1
+--
+
+SELECT pg_catalog.setval('public.categories_id_seq', 143, true);
+
+
+--
+-- Name: category_children_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user1
+--
+
+SELECT pg_catalog.setval('public.category_children_id_seq', 328, true);
+
+
+--
+-- Name: category_childrens_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user1
+--
+
+SELECT pg_catalog.setval('public.category_childrens_id_seq', 1, false);
+
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user1
+--
+
+SELECT pg_catalog.setval('public.posts_id_seq', 35, true);
+
+
+--
+-- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: user1
+--
+
+ALTER TABLE ONLY public.categories
+    ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: category_children category_children_pkey; Type: CONSTRAINT; Schema: public; Owner: user1
+--
+
+ALTER TABLE ONLY public.category_children
+    ADD CONSTRAINT category_children_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: category_childrens category_childrens_pkey; Type: CONSTRAINT; Schema: public; Owner: user1
+--
+
+ALTER TABLE ONLY public.category_childrens
+    ADD CONSTRAINT category_childrens_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: posts posts_pkey; Type: CONSTRAINT; Schema: public; Owner: user1
+--
+
+ALTER TABLE ONLY public.posts
+    ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: category_children category_children_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user1
+--
+
+ALTER TABLE ONLY public.category_children
+    ADD CONSTRAINT category_children_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id) ON DELETE CASCADE;
+
+
+--
+-- Name: category_childrens category_childrens_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user1
+--
+
+ALTER TABLE ONLY public.category_childrens
+    ADD CONSTRAINT category_childrens_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id) ON DELETE CASCADE;
+
+
+--
+-- Name: posts posts_category_child_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user1
+--
+
+ALTER TABLE ONLY public.posts
+    ADD CONSTRAINT posts_category_child_fkey FOREIGN KEY (category_child) REFERENCES public.category_children(id) ON DELETE CASCADE;
+
+
+--
+-- Name: posts posts_category_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user1
+--
+
+ALTER TABLE ONLY public.posts
+    ADD CONSTRAINT posts_category_fkey FOREIGN KEY (category) REFERENCES public.categories(id) ON DELETE CASCADE;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
