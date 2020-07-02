@@ -1,4 +1,4 @@
-Projet structure:\
-	|-------> node file (index) for data transfer: .json -> postgresql
-	|--------------> back project (node/express)
-	|--------------> front project (ember)
+Projet structure: \
+	|-------> node file (index) for data transfer: .json -> postgresql \
+	|--------------> back project (node/express) \
+	|--------------> front project (ember) \
