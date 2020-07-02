@@ -1,7 +1,6 @@
 // const StatSerializer = require('../lib/serializer')
 
 const pool = require('../index')
-const { idPool } = require("../index")
 
 
 
@@ -75,14 +74,6 @@ const getCategoriesInfo = async(res) => {
       res.send(result)
       done()
     })
-    
-    // .then((result) => {
-    //   // console.log(result)
-
-    //   res.send(result.rows)
-    //   done()
-    // })
-    // .catch(e => console.error(e.stack))
   })
 }
 
@@ -90,7 +81,6 @@ const getCategoryChildren = async(res, categoryId) => {
   pool.connect((err, client, done) => {
     client.query(`select * from category_children where category_id = ${categoryId}`)
     .then((result) => {
-      // console.log(result)
       res.send(result.rows)
       done()
     })
@@ -99,99 +89,7 @@ const getCategoryChildren = async(res, categoryId) => {
 }
 
 
-
-
-
-// asdkjasdklas;ldk lkadjaskljd askldjkla sjdakls jdklasjd asd 3ilu d23od uias ukl4e8djni
-
-const findAll = (res) => {
-  pool.connect((err, client, done) => {
-    client
-      .query('select * from lesson_statistics limit 1000;')
-      .then((result) => {
-        var stats = StatSerializer.serialize(result.rows)
-        res.send(stats)
-        //res.send(config.get('all-data'))
-        done()
-      })
-      .catch((e) => console.error(e.stack))
-
-    if (err) {
-      return console.error('Error running query', err)
-    }
-  })
-}
-
-const findById = (req, res) => {
-  const { id } = req.params
-
-  pool.connect((err, client, done) => {
-    client
-      .query(`select * from lesson_statistics where id = ${id}`)
-      .then((result) => {
-        var stats = StatSerializer.serialize(result.rows)
-        const obj = {
-          data: stats.data[0],
-        }
-        res.send(obj)
-        //res.send(config.get('single-data'))
-        done()
-      })
-      .catch((e) => console.error(e.stack))
-
-    if (err) {
-      return console.error('Error running query', err)
-    }
-  })
-}
-
-const findByLessonId = (lesson_id, res) => {
-  //   res.send({
-  //     data: config.get('all-data').data.filter((item) => {
-  //       return item.attributes['lesson-id'] == lesson_id
-  //     }),
-  //   })
-  pool.connect((err, client, done) => {
-    client
-      .query(`select * from lesson_statistics where lesson_id = ${lesson_id}`)
-      .then((result) => {
-        var stats = StatSerializer.serialize(result.rows)
-        res.send(stats)
-        done()
-      })
-      .catch((e) => console.error(e.stack))
-
-    if (err) {
-      return console.error('Error running query', err)
-    }
-  })
-}
-
-const getRandomRecord = (res) => {
-  pool.connect((err, client, done) => {
-    client
-      .query('select * from lesson_statistics limit 1000;')
-      .then((result) => {
-        let randomId = idPool[randomInteger(0, idPool.length-1)]
-        // console.log(idPool.length)
-        findByLessonId(randomId, res)
-        // res.send(lesson)
-        // var stats = StatSerializer.serialize(result.rows)
-        // res.send(stats)
-        //res.send(config.get('all-data'))
-        done()
-      })
-      .catch((e) => console.error(e.stack))
-
-    if (err) {
-      return console.error('Error running query', err)
-    }
-  })
-}
-
-
 function randomInteger(min, max) {
-  // случайное число от min до (max+1)
   let rand = min + Math.random() * (max + 1 - min);
   return Math.floor(rand);
 }
